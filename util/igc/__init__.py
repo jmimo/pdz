@@ -3,7 +3,7 @@ from datetime import datetime
 from util.geo import distance
 import json
 
-Wgs84Point = namedtuple('Wgs84Point', ['latitude', 'longitude'])
+Wgs84Point = namedtuple('Wgs84Point', ['latitude', 'longitude', 'altitude'])
 BRecord = namedtuple('BRecord', ['datetime', 'point', 'validity', 'baro_altitude', 'gps_altitude'])
 
 
@@ -78,7 +78,8 @@ def __b_record(date, data):
         datetime.strptime('{}{}'.format(date, data[1:7]), '%d%m%y%H%M%S'),
         Wgs84Point(
             __latitude_deg(data[7:14], data[14:15]),
-            __longitude_deg(data[15:23], data[23:24])
+            __longitude_deg(data[15:23], data[23:24]),
+            int(data[30:35])
         ),
         data[24:25],
         int(data[25:30]),
