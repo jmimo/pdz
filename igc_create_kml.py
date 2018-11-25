@@ -25,13 +25,13 @@ def main():
 
         for igc in data:
             points = [record.point for record in igc.b_records]
-            createTrack(kml, igc.pilot, points)
+            createTrack(kml, igc.pilot, igc.date, points)
 
         kml.savekmz('all_tracks.kmz', format=False)
 
 
-def createTrack(kml, pilot, points):
-    track = kml.newlinestring(name=pilot)
+def createTrack(kml, pilot, date, points):
+    track = kml.newlinestring(name='{}_{}'.format(date, pilot))
     coordinates = list()
     for index, point in enumerate(points[1:]):
         if index % 5 == 0:
